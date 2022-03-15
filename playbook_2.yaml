@@ -1,0 +1,28 @@
+---
+
+- name: Create a VIP, pool and pool members
+  hosts: all
+  connection: local
+
+  vars:
+    provider:
+      password: C3d3t3POC!
+      server: 172.16.7.10
+      user: admin
+      validate_certs: no
+      server_port: 443
+
+  tasks:
+    - name: Create a VIP
+      bigip_virtual_server:
+        provider: "{{ provider }}"
+        description: foo-vip
+        destination: 172.16.10.108
+        name: vip-1
+        pool: pool_web
+        port: 80
+        snat: Automap
+        profiles:
+          - http
+          - clientssl
+      delegate_to: localhost
