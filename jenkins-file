@@ -1,0 +1,19 @@
+node {
+stage ("Prepare") {
+cleanWs deleteDirs: true
+sh "git clone https://github.com/f5-indo-poc/poc-bfi.git"
+
+
+
+}
+
+
+
+
+stage ("Ansible") {
+sh "ansible-playbook -i /home/shaugi/ansible/inventory/hosts poc-bfi/playbook_2.yaml"
+}
+
+
+
+}
