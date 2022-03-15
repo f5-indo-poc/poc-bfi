@@ -18,9 +18,9 @@
         provider: "{{ provider }}"
         description: foo-vip
         destination: 172.16.10.108
-        name: vip-1
+        name: vip-2
         pool: pool_web
-        port: 80
+        port: 8080
         snat: Automap
         profiles:
           - http
