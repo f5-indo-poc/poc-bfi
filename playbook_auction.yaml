@@ -30,9 +30,9 @@
         pool: pool_auction
         port: 80
       with_items:
-        - host: na2-auction.cloudservicesdemo.net
+        - host: 34.229.48.248
           name: NA1_auction
-        - host: na3-auction.cloudservicesdemo.net
+        - host: 52.249.252.91
           name: NA3_auction
       delegate_to: localhost
 
