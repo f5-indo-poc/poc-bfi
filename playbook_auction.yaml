@@ -40,7 +40,7 @@
       bigip_virtual_server:
         provider: "{{ provider }}"
         description: Auction Virtual Server
-        destination: 172.16.10.108
+        destination: 172.16.7.11
         name: vs_auction
         pool: pool_auction
         port: 443
