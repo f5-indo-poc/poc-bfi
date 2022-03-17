@@ -18,6 +18,8 @@
         provider: "{{ provider }}"
         lb_method: round-robin
         name: pool_auction
+        monitors:
+          - tcp
         slow_ramp_time: 120
       delegate_to: localhost
 
