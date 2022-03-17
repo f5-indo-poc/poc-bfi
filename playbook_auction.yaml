@@ -1,0 +1,51 @@
+---
+
+- name: Create a VIP, pool and pool members
+  hosts: all
+  connection: local
+
+  vars:
+    provider:
+      password: C3d3t3POC!
+      server: 172.16.7.10
+      user: admin
+      validate_certs: no
+      server_port: 443
+
+  tasks:
+    - name: Create a pool
+      bigip_pool:
+        provider: "{{ provider }}"
+        lb_method: round-robin
+        name: pool_auction
+        slow_ramp_time: 120
+      delegate_to: localhost
+
+    - name: Add members to pool
+      bigip_pool_member:
+        provider: "{{ provider }}"
+        description: "webserver {{ item.name }}"
+        host: "{{ item.host }}"
+        name: "{{ item.name }}"
+        pool: pool_auction
+        port: 80
+      with_items:
+        - host: na2-auction.cloudservicesdemo.net
+          name: NA1_auction
+        - host: na3-auction.cloudservicesdemo.net
+          name: NA3_auction
+      delegate_to: localhost
+
+    - name: Create a VIP
+      bigip_virtual_server:
+        provider: "{{ provider }}"
+        description: Auction Virtual Server
+        destination: 172.16.10.108
+        name: vs_auction
+        pool: pool_auction
+        port: 443
+        snat: Automap
+        profiles:
+          - http
+          - clientssl
+      delegate_to: localhost
